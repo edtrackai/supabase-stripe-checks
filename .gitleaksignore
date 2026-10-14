@@ -1,0 +1,2 @@
+# Intentional fake webhook secret in a deliberately vulnerable test fixture (not a real key)
+8b20d6ee8c350206767628e176e561598f9534cf:tests/fixtures/bad/app/api/webhooks/stripe/route.ts:generic-api-key:3
