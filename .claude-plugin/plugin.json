@@ -1,6 +1,6 @@
 {
   "name": "supabase-stripe-checks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Free checks for Next.js + Supabase + Stripe apps: rls-check finds row-level security gaps in your migrations, stripe-webhook-check finds unsafe webhook handlers. Zero dependencies, read-only.",
   "author": { "name": "Stack & Ship", "url": "https://edtrackai.github.io" },
   "homepage": "https://github.com/edtrackai/supabase-stripe-checks",

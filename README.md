@@ -43,7 +43,7 @@ node skills/stripe-webhook-check/check-webhook.mjs path/to/app --fail-on=high   
 | R5 | high | `security definer` function without `set search_path` |
 | W1 | critical | Webhook never calls `constructEvent` (no signature check) |
 | W2 | critical | `request.json()` before verification (signature can't be checked) |
-| W3 | high | No idempotency: `event.id` never recorded, so retries double-grant |
+| W3 | high | No idempotency (`event.id` never recorded, so retries double-grant), or dedupe that isn't status-aware: duplicates skipped with no `pending`/`completed` state (incl. claim-then-delete), so a failed or crashed event is lost |
 | W4 | medium | Webhook on the Edge runtime |
 | W5 | medium | `whsec_` secret hard-coded (redacted in output) |
 

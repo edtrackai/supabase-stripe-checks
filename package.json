@@ -1,6 +1,6 @@
 {
   "name": "supabase-stripe-checks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Free Claude Code plugin: rls-check and stripe-webhook-check for Next.js + Supabase + Stripe.",
   "license": "MIT",

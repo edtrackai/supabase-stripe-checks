@@ -7,7 +7,7 @@
       "name": "supabase-stripe-checks",
       "source": "./",
       "description": "rls-check + stripe-webhook-check: free, read-only security checks for Supabase migrations and Stripe webhooks.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "license": "MIT",
       "category": "security"
     }

@@ -2,6 +2,9 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync, spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { mkdtempSync, mkdirSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 import { check as rls, CHECKS as RC } from "../skills/rls-check/check-rls.mjs";
 import { check as hook, CHECKS as WC } from "../skills/stripe-webhook-check/check-webhook.mjs";
 
@@ -30,6 +33,18 @@ test("stripe-webhook-check: zero findings on the good fixture", () => {
   const r = hook(fx("good"));
   assert.deepEqual(r.handlers, ["app/api/webhooks/stripe/route.ts"]);
   assert.deepEqual(r.findings, []);
+});
+test("stripe-webhook-check: W3 flags status-less dedupe and claim-then-delete", () => {
+  const head = 'import Stripe from "stripe";\nexport const runtime = "nodejs";\nexport async function POST(request: Request) {\n  const body = await request.text();\n  const event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!);\n';
+  for (const body of [
+    '  const { error } = await db.from("stripe_events").insert({ id: event.id });\n  if (error?.code === "23505") return new Response("dup");\n}\n',
+    '  await db.from("stripe_events").insert({ id: event.id });\n  try { await work(); } catch (e) { await db.from("stripe_events").delete().eq("id", event.id); throw e; }\n}\n',
+  ]) {
+    const d = mkdtempSync(join(tmpdir(), "ssc-w3-"));
+    mkdirSync(join(d, "app/api/webhooks/stripe"), { recursive: true });
+    writeFileSync(join(d, "app/api/webhooks/stripe/route.ts"), head + body);
+    assert.deepEqual(hook(d).findings.map((f) => f.id), ["W3"]);
+  }
 });
 test("secrets are redacted in all output", () => {
   const out = execFileSync("node", [WH, fx("bad"), "--json"], { encoding: "utf8" });
