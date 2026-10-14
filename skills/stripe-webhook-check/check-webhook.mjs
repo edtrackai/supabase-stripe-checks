@@ -9,7 +9,7 @@ const SKIP = new Set(["node_modules", ".next", ".git", "dist", "build", "out", "
 export const CHECKS = {
   W1: { sev: "critical", title: "No signature verification", fix: "Verify with stripe.webhooks.constructEvent(rawBody, signature, process.env.STRIPE_WEBHOOK_SECRET)." },
   W2: { sev: "critical", title: "Body parsed as JSON before verification", fix: "Read the raw body with await request.text() and pass that to constructEvent." },
-  W3: { sev: "high", title: "Idempotency missing or not status-aware", fix: "Record event.id (unique) with status 'pending', skip a duplicate only if it is 'completed' (otherwise process it again), set 'completed' after processing succeeds, and return 5xx on failure so Stripe retries." },
+  W3: { sev: "high", title: "Idempotency missing or not status-aware", fix: "Record event.id (unique) with status 'pending' and skip a duplicate only if it is 'completed'. Reprocess a still-pending event only when handlers are idempotent upserts keyed on Stripe ids, or after an atomic lease claim (locked_until) so a crashed attempt can be reclaimed; give side effects (emails, credit grants) their own dedupe key. Set 'completed' after processing succeeds, and return 5xx on failure so Stripe retries." },
   W4: { sev: "medium", title: "Webhook runs on the Edge runtime", fix: "Use export const runtime = \"nodejs\" (or remove the edge export)." },
   W5: { sev: "medium", title: "Webhook secret hard-coded", fix: "Move whsec_… into STRIPE_WEBHOOK_SECRET and roll the secret in the Stripe dashboard." },
 };

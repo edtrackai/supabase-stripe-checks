@@ -9,7 +9,8 @@ export async function POST(request: Request) {
   try { event = stripe.webhooks.constructEvent(body, sig, process.env.STRIPE_WEBHOOK_SECRET!); }
   catch { return new Response("bad signature", { status: 400 }); }
   const db = createAdminClient();
-  // Pending until processed; skip only completed duplicates; a pending retry is processed again.
+  // Pending until processed; skip only completed duplicates; a pending retry is processed again,
+  // which is safe because the handlers are idempotent upserts keyed on Stripe ids.
   const { error } = await db.from("stripe_events").insert({ id: event.id, status: "pending" });
   if (error?.code === "23505") {
     const { data } = await db.from("stripe_events").select("status").eq("id", event.id).maybeSingle();
