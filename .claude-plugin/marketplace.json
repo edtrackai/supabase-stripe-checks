@@ -1,0 +1,15 @@
+{
+  "name": "stack-and-ship",
+  "owner": { "name": "Stack & Ship", "url": "https://edtrackai.github.io" },
+  "metadata": { "description": "Tested Claude Code plugins for Next.js + Supabase + Stripe." },
+  "plugins": [
+    {
+      "name": "supabase-stripe-checks",
+      "source": "./",
+      "description": "rls-check + stripe-webhook-check: free, read-only security checks for Supabase migrations and Stripe webhooks.",
+      "version": "1.0.0",
+      "license": "MIT",
+      "category": "security"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+# supabase-stripe-checks
+
+Two free, read-only Claude Code checks for Next.js + Supabase + Stripe apps. They target the two bugs AI agents ship most often:
+
+- **`rls-check`**: finds row-level security gaps in your Supabase migrations.
+- **`stripe-webhook-check`**: finds Stripe webhook handlers anyone can fake.
+
+Zero dependencies. Nothing is edited and no database is touched. MIT licensed.
+
+## Install
+
+In Claude Code:
+
+```
+/plugin marketplace add edtrackai/supabase-stripe-checks
+/plugin install supabase-stripe-checks@stack-and-ship
+```
+
+Then ask "check my RLS" or "review my Stripe webhook", or run:
+
+```
+/supabase-stripe-checks:rls-check
+/supabase-stripe-checks:stripe-webhook-check
+```
+
+Claude runs the checker, opens every flagged line to rule out false positives, and gives you a table of `file:line` findings with the fix.
+
+No Claude Code? The checkers are plain Node 18+ scripts:
+
+```bash
+node skills/rls-check/check-rls.mjs path/to/app
+node skills/stripe-webhook-check/check-webhook.mjs path/to/app --fail-on=high   # exit 1 in CI
+```
+
+## What it checks
+
+| ID | Severity | Check |
+|---|---|---|
+| R1 | critical | Table created without `enable row level security` |
+| R2 | critical | `using (true)` / `with check (true)` policy |
+| R3 | high | Insert/update/delete policy granted to `anon` or `public` |
+| R4 | high | Insert/update policy with no `with check` |
+| R5 | high | `security definer` function without `set search_path` |
+| W1 | critical | Webhook never calls `constructEvent` (no signature check) |
+| W2 | critical | `request.json()` before verification (signature can't be checked) |
+| W3 | high | No idempotency: `event.id` never recorded, so retries double-grant |
+| W4 | medium | Webhook on the Edge runtime |
+| W5 | medium | `whsec_` secret hard-coded (redacted in output) |
+
+Tested: every check fires on `tests/fixtures/bad`. There are zero findings on `tests/fixtures/good` and on our Next.js + Supabase + Stripe reference app. Run `npm run verify`.
+
+## Limits
+
+These are pattern checks, not a full audit. They read `.sql` files in the repo, so run `supabase db pull` if your schema only lives in the dashboard. They don't cover:
+- auth code (`getSession()` on the server, unprotected Server Actions);
+- service-role keys in client bundles;
+- client-chosen prices;
+- storage policies;
+- IDOR.
+
+## Want the rest?
+
+- **[Launch Audit](https://luxurydrive0.gumroad.com/l/LAUNCH_AUDIT_SLUG) ($12):** the full pre-launch audit.
+  - 27 checks across keys, auth, RLS, Stripe, and hardening.
+  - A read-only auditor agent that verifies every hit and hunts for IDOR.
+  - A `LAUNCH-AUDIT.md` report with a ready / not-ready verdict, plus a step-by-step fix plan.
+- **[Ship-Ready AI Rules v2](https://luxurydrive0.gumroad.com/l/ffjsf) ($19):** stops your agent writing these bugs in the first place.
+  - Rules for Claude Code, Cursor, and Codex.
+  - Guardrail hooks that block secret reads and remote migrations.
+  - Stack skills and a tested demo app.
+  - Free update if you bought v1.
+
+Made by [Stack & Ship](https://edtrackai.github.io): tested kits for people who ship. Issues and PRs welcome.
+
+## License
+
+MIT. See [LICENSE](LICENSE). Not affiliated with Anthropic, Supabase, or Stripe.
