@@ -60,11 +60,8 @@ These are pattern checks, not a full audit. They read `.sql` files in the repo, 
 
 ## Want the rest?
 
-- **[Ship-Ready AI Rules v2](https://luxurydrive0.gumroad.com/l/ffjsf) ($19):** stops your agent writing these bugs in the first place.
-  - Rules for Claude Code, Cursor, and Codex.
-  - Guardrail hooks that block secret reads and remote migrations.
-  - Stack skills and a tested demo app.
-  - Free update if you bought v1.
+- **[Free Supabase + Stripe Security Checklist](https://luxurydrive0.gumroad.com/l/security-checklist?utm_source=github&utm_medium=readme&utm_campaign=supabase-stripe-checks)** (20 checks, PDF): the manual version of these checks and more.
+- **[Ship-Ready AI Rules](https://luxurydrive0.gumroad.com/l/ffjsf?utm_source=github&utm_medium=readme&utm_campaign=supabase-stripe-checks)**: rules that stop Cursor and Claude Code writing these bugs in the first place.
 
 Made by [Stack & Ship](https://edtrackai.github.io): tested kits for people who ship. Issues and PRs welcome.
 
