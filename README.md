@@ -60,7 +60,10 @@ These are pattern checks, not a full audit. They read `.sql` files in the repo, 
 
 ## Want the rest?
 
+*Ad: the Launch Audit and Ship-Ready AI Rules links below are paid products from the same author (Stack & Ship). This plugin stays free and MIT-licensed.*
+
 - **[Free Supabase + Stripe Security Checklist](https://luxurydrive0.gumroad.com/l/security-checklist?utm_source=github&utm_medium=readme&utm_campaign=supabase-stripe-checks)** (20 checks, PDF): the manual version of these checks and more.
+- **[Launch Audit](https://edtrackai.github.io/launch-audit?utm_source=github&utm_medium=readme&utm_campaign=supabase-stripe-checks)**: covers what these two checks don't, including service-role keys in client bundles, client-chosen prices, and (as manual-review items) storage policies and IDOR.
 - **[Ship-Ready AI Rules](https://luxurydrive0.gumroad.com/l/ffjsf?utm_source=github&utm_medium=readme&utm_campaign=supabase-stripe-checks)**: rules that stop Cursor and Claude Code writing these bugs in the first place.
 
 Made by [Stack & Ship](https://edtrackai.github.io): tested kits for people who ship. Issues and PRs welcome.
