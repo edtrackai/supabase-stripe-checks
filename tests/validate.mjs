@@ -17,7 +17,10 @@ for (const s of readdirSync("skills")) {
   for (const m of md.matchAll(/\$\{CLAUDE_SKILL_DIR\}\/([\w.-]+)/g)) ok(existsSync(`skills/${s}/${m[1]}`), `${s}: missing ${m[1]}`);
 }
 const readme = readFileSync("README.md", "utf8");
-for (const [label, re] of [["v2 CTA", /Ship-Ready AI Rules/], ["Launch Audit CTA", /Launch Audit/], ["install command", /\/plugin marketplace add edtrackai\/supabase-stripe-checks/], ["MIT", /MIT/]]) ok(re.test(readme), `README missing ${label}`);
+for (const [label, re] of [["v2 CTA", /Ship-Ready AI Rules/], ["install command", /\/plugin marketplace add edtrackai\/supabase-stripe-checks/], ["MIT", /MIT/]]) ok(re.test(readme), `README missing ${label}`);
+// Push-ready: no unresolved placeholders, and every Gumroad link uses a real slug.
+ok(!/[A-Z_]{3,}_SLUG|\[[A-Z_]+_LINK\]|TODO/.test(readme), "README contains an unresolved placeholder");
+for (const m of readme.matchAll(/gumroad\.com\/l\/([^)\s]+)/g)) ok(/^[a-z0-9]+$/.test(m[1]), `Gumroad link has a placeholder slug: ${m[1]}`);
 ok(/^MIT License/.test(readFileSync("LICENSE", "utf8")), "LICENSE must be MIT");
 ok(!/sk_live_[0-9a-zA-Z]{10}|whsec_[0-9a-zA-Z]{20}/.test(readme), "README contains something key-like");
 console.log(`${n} items checked: ${errors.length} errors`); errors.forEach((e) => console.log("  ✗ " + e));

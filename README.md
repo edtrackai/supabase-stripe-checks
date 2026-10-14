@@ -60,10 +60,6 @@ These are pattern checks, not a full audit. They read `.sql` files in the repo, 
 
 ## Want the rest?
 
-- **[Launch Audit](https://luxurydrive0.gumroad.com/l/LAUNCH_AUDIT_SLUG) ($12):** the full pre-launch audit.
-  - 27 checks across keys, auth, RLS, Stripe, and hardening.
-  - A read-only auditor agent that verifies every hit and hunts for IDOR.
-  - A `LAUNCH-AUDIT.md` report with a ready / not-ready verdict, plus a step-by-step fix plan.
 - **[Ship-Ready AI Rules v2](https://luxurydrive0.gumroad.com/l/ffjsf) ($19):** stops your agent writing these bugs in the first place.
   - Rules for Claude Code, Cursor, and Codex.
   - Guardrail hooks that block secret reads and remote migrations.
