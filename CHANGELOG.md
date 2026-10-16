@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.3 (2026-10-16)
+- `npm test` (and so `npm run verify`) now names the test file directly instead of a quoted glob, which Node 20's `node --test` did not expand, so no tests ran. Tested on Node 20.19. Checks are unchanged.
+
 ## 1.0.2 (2026-10-14)
 - `stripe-webhook-check` W3 fix text: reprocessing a still-`pending` event is only safe when handlers are idempotent upserts keyed on Stripe ids, or after an atomic lease claim (`locked_until`) so a crashed attempt can be reclaimed; side effects (emails, credit grants) need their own dedupe key. Detection is unchanged.
 - Good fixture comment says why its pending retry is safe.

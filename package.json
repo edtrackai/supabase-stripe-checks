@@ -1,13 +1,13 @@
 {
   "name": "supabase-stripe-checks",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "description": "Free Claude Code plugin: rls-check and stripe-webhook-check for Next.js + Supabase + Stripe.",
   "license": "MIT",
   "type": "module",
   "engines": { "node": ">=18" },
   "scripts": {
-    "test": "node --test \"tests/*.test.mjs\"",
+    "test": "node --test tests/checks.test.mjs",
     "validate": "node tests/validate.mjs",
     "verify": "npm run validate && npm test"
   }
