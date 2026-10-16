@@ -48,7 +48,7 @@ test("stripe-webhook-check: W3 flags status-less dedupe and claim-then-delete", 
 });
 test("secrets are redacted in all output", () => {
   const out = execFileSync("node", [WH, fx("bad"), "--json"], { encoding: "utf8" });
-  assert.ok(!out.includes("whsec_abcdefghijklmnop1234"));
+  assert.ok(!out.includes("whsec_FAKE_FOR_TESTS_NOT_A_REAL_SECRET"));
   assert.match(out, /\[redacted\]/);
 });
 test("empty repos give a helpful message, not an error", () => {
